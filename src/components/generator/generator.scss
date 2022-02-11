@@ -48,7 +48,6 @@
         .color-layer{
             width: 100%;
             .layer-field{
-                transition: 5s;
                 width: 100%;
                 cursor: all-scroll;
                 height: 40px;
@@ -74,6 +73,9 @@
                     cursor: pointer;
                 }
             }
+            .unactive:hover{
+                background-color: rgb(240, 239, 239);
+            }
         }
         .active{
             background-color: #5c6ac4;
@@ -84,6 +86,11 @@
     }
 }
 
+
+.dragover{
+    background-color: rgb(255, 255, 137);
+    cursor: move;
+}
 @media only screen and (max-width: 550px) {
     .generator{
         min-width: 200px;

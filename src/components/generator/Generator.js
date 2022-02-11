@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import "./generator.scss"
 import ColorModal from '../color-modal/ColorModal';
 import { useDispatch, useSelector } from 'react-redux';
-import { addStyleAction, changeStylesAction, removeStylesActon } from '../../store/actions/actions';
+import { addStyleAction, changeStylesAction, removeStylesActon, swapAction } from '../../store/actions/actions';
 
 const Generator = () => {
     let [right, setRight] = useState("0")
@@ -20,8 +20,11 @@ const Generator = () => {
     let dispatch = useDispatch()
     let dispatchAddStyle = () => dispatch(addStyleAction())
     let dispatchChangeStyle = (index, item) => dispatch(changeStylesAction(index, item))
+    let dispatchSwap = (swapA, swapItem, index) => dispatch(swapAction(swapA, swapItem, index))
 
     let [index, setIndex] = useState(0)
+    let [swapA, setSwapA] = useState(null)
+    let [swapItem, setSwapItem] = useState(null)
 
     useEffect(() => {
         let current = styleState[index]
@@ -54,13 +57,27 @@ const Generator = () => {
         setIndex(index)
     }
 
+    let dragEnter = (index) => {
+        if (swapItem === styleState[index]) {
+            setSwapA(index)
+            return
+        }
+        dispatchSwap(swapA, swapItem, index)
+    }
+
+    let dragStart = (e, index) => {
+        e.dataTransfer.effectedAllowed = "move"
+        setSwapA(index)
+        setSwapItem(styleState[index])
+    }
+
     return (
         <div className='generator'>
             <h2>Text-Shadow CSS Generator</h2>
             <div className='generator__controller'>
                 <div className='generator__controller__input'>
                     <span>Shift right</span>
-                    <input onChange={(e) => {setRight(e.target.value); changeStyle(color)}} value={right} type="range" min="-50" max="50" />
+                    <input onChange={(e) => { setRight(e.target.value); changeStyle(color) }} value={right} type="range" min="-50" max="50" />
                 </div>
                 <div className='generator__controller__input'>
                     <span>Shift down</span>
@@ -80,7 +97,27 @@ const Generator = () => {
                 <button onClick={dispatchAddStyle} className='btn'>Add layer</button>
                 <div className='color-layer'>
                     {styleState.map((item, number) => {
-                        return <div key={Math.random()} className={number === index ? "active" : null} onClick={() => changeIndex(number)}><Field changeIndex={changeIndex} right={item.right} down={item.down} blur={item.blur} a={item.a} r={item.r} g={item.g} b={item.b} index={number} /></div>
+                        return (
+                            <div
+                                key={Math.random()}
+                                className={number === index ? "active" : "unactive"}
+                                onClick={() => changeIndex(number)}
+                            >
+                                <Field
+                                    draggable={true}
+                                    onDragEnter={dragEnter}
+                                    onDragStart={dragStart}
+                                    changeIndex={changeIndex}
+                                    right={item.right}
+                                    down={item.down}
+                                    blur={item.blur}
+                                    a={item.a}
+                                    r={item.r}
+                                    g={item.g}
+                                    b={item.b}
+                                    index={number} />
+                            </div>
+                        )
                     })}
                 </div>
             </div>
@@ -93,12 +130,41 @@ let Field = (props) => {
     let dispatch = useDispatch()
     let dispatchRemoveStyles = (index) => dispatch(removeStylesActon(index))
 
+    let itemRef = useRef(null)
+
     let removeStyles = () => {
         changeIndex(0)
         dispatchRemoveStyles(index)
     }
+
+    let dragEnter = (index) => {
+        itemRef.current.classList.add("dragover")
+        props.onDragEnter(index)
+    }
+
+    let dragLeave = () => {
+        itemRef.current.classList.remove("dragover")
+    }
+
+    let dragging = (event) => {
+        event.preventDefault()
+    }
+
+    let dragEnd = () => {
+        itemRef.current.classList.remove("dragover")
+    }
+
     return (
-        <div className='layer-field'>
+        <div
+            ref={itemRef}
+            className='layer-field'
+            draggable={true}
+            onDragEnter={()=>dragEnter(index)}
+            onDragStart={(e)=>props.onDragStart(e, index)}
+            onDragLeave={dragLeave}
+            onDragOver={dragging}
+            onDragEnd={dragEnd}
+        >
             <span>
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" className="icon bi bi-three-dots-vertical" viewBox="0 0 16 16">
                     <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z" />

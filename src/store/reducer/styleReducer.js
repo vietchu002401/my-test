@@ -30,6 +30,11 @@ let stylesReducer = (state = initialState, action) => {
         case types.REMOVESTYLE:
             state.splice(action.index,1)
             return [...state]
+        case types.SWAP:
+            let swapItem = state[action.index]
+            state[action.index] = action.swapItem
+            state[action.swapA] = swapItem
+            return [...state]
         default:
             return state
     }

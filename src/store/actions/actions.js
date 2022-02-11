@@ -20,3 +20,12 @@ export let removeStylesActon = (index)=>{
         index
     }
 }
+
+export let swapAction = (swapA, swapItem, index)=>{
+    return {
+        type : types.SWAP,
+        swapA,
+        swapItem,
+        index
+    }
+}
