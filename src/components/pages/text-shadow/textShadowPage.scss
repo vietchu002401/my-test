@@ -1,0 +1,41 @@
+.text-shadow-page{
+    max-width: 1000px;
+    height: auto;
+    padding: 0 20px 0;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    .text-shadow-page__right{
+        flex: 1;
+        min-width: 457px;
+        margin: 10px;
+    }
+}
+
+.code-value{
+    min-width: 457px;
+    min-height: 150px;
+    padding: 15px;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    background-color: white;
+    margin: 20px 0;
+    span{
+        line-height: 2rem;
+        text-transform: none;
+        letter-spacing: normal;
+        font-weight: 400;
+        color: var(--p-text,#212b36);
+    }
+}
+
+@media only screen and (max-width: 550px) {
+    .text-shadow-page{
+        .text-shadow-page__right{
+            min-width: 200px;
+        }
+    }
+    .code-value{
+        min-width: 200px;
+    }
+}

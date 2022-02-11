@@ -1,0 +1,32 @@
+.color-modal{
+    position: relative;
+    .modal__controller__color{
+        width: 48px;
+        height: 28px;
+        border: 1px solid lightgrey;
+        border-radius: 4px;
+        position: relative;
+        padding: 2px;
+        cursor: pointer;
+        margin: 0 2px;
+        .bgr{
+            width: 100%;
+            height: 100%;
+        }
+        .modal__controller__color__change{
+            position: absolute;
+            top: 0;
+            left: calc(100% + 20px);
+            z-index: 3;
+        }
+    }
+    .overlay{
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        z-index: 2;
+        top: 0; 
+        background: transparent;
+        left: 0;
+    }
+}

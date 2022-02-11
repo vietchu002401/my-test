@@ -1,0 +1,91 @@
+.generator{
+    min-width: 457px;
+    flex: 1;
+    margin: 10px;
+    min-height: 617px;
+    padding: 15px;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    .generator__controller{
+        width: 100%;
+        height: 328px;
+        margin-top: 20px;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        .generator__controller__input{
+            width: 100%;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            input{
+                padding: 10px 0;
+                cursor: pointer;
+                outline: none;
+                height: 5px;
+            }
+        }
+    }
+    .generator__layer{
+        width: 100%;
+        min-height: 150px;
+        display: flex;
+        flex-direction: column;
+        padding: 20px 0;
+        .btn{
+            width: 90px;
+            height: 36px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-bottom: 20px;
+        }
+        .btn:hover{
+            background-color: rgb(245, 244, 244);
+        }
+        .color-layer{
+            width: 100%;
+            .layer-field{
+                transition: 5s;
+                width: 100%;
+                cursor: all-scroll;
+                height: 40px;
+                padding: 10px 10px 10px 40px;
+                position: relative;
+                span{
+                    position: absolute;
+                    left: 4px;
+                    top: 12px;
+                    .icon:nth-child(1){
+                        position: absolute;
+                        left: 2px;
+                    }
+                    .icon:nth-child(2){
+                        position: absolute;
+                        left: 10px;
+                    }
+                }
+
+                .icon-control{
+                    position: absolute;
+                    right: 30px;
+                    cursor: pointer;
+                }
+            }
+        }
+        .active{
+            background-color: #5c6ac4;
+            div{
+                color: white;
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: 550px) {
+    .generator{
+        min-width: 200px;
+    }
+}

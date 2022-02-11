@@ -1,0 +1,33 @@
+.preview{
+    min-width: 457px;
+    height: 344px;
+    background-color: white;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    .preview__color{
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+    }
+    .preview-show{
+        width: 100%;
+        flex: 1;
+        display: flex;
+        .text{
+            font-size: 80px;
+            line-height: 1;
+            padding: 30px 0;
+            transition: .3s;
+            padding: 40px 0;
+            margin: auto;
+        }
+    }
+}
+
+@media only screen and (max-width: 550px) {
+    .preview{
+        min-width: 200px;
+    }
+}
